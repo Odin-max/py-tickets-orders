@@ -77,7 +77,7 @@ class MovieSessionDetailSerializer(MovieSessionSerializer):
 
     class Meta:
         model = MovieSession
-        fields = ("id", "show_time", "movie", "cinema_hall, taken_places")
+        fields = ("id", "show_time", "movie", "cinema_hall", "taken_places")
 
     def get_taken_places(self, obj):
         return [{"row": t.row, "seat": t.seat} for t in obj.tickets.all()]
@@ -120,6 +120,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     tickets = TicketWriteSerializer(many=True)
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Order
